@@ -1,7 +1,8 @@
 from matplotlib import pyplot as plt
 from scipy.cluster.hierarchy import dendrogram, linkage
 import pandas as pd
-
+pd.set_option('display.max_columns', 20)
+pd.set_option('display.width', 1000)
 
 # PANDAS ========================================================================
 r_cols = ["user id" , "movie id" , "rating", "timestamp"]
@@ -32,8 +33,8 @@ newArrOnlyRatings = newArr.iloc[:, [0] + list(range(4, 22))]
 # Data sum values
 result = newArrOnlyRatings.groupby(["user id"]).sum()
 result = result.iloc[:, list(range(0, 18))]
-# print(result)
 data = result.values.tolist()
+# print(data[0])
 # end Data sum values
 
 # END PANDAS ========================================================================
