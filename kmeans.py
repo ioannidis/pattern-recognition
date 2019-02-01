@@ -6,7 +6,7 @@ from movielens_data import MovieLensData
 dataObj = MovieLensData()
 data = dataObj.get_normalized_data()
 
-kmeans = KMeans(n_clusters=11)
+kmeans = KMeans(n_clusters = 8, precompute_distances = True,)
 kmeans.fit(data)  # Fit data into n_clusters
 
 # Getting the cluster labels
