@@ -6,7 +6,7 @@
 
 import pandas as pd
 
-class Data:
+class MovieLensData:
 
     def __init__(self):
         self.load_user_ratings_data()
