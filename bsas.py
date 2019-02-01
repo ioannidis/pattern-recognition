@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # PANDAS ========================================================================
-theta_list = np.arange(24, 72, 0.5)
+theta_list = np.arange(0.1, 2.1, 0.01)
 
 r_cols = ["user id" , "movie id" , "rating", "timestamp"]
 ratings = pd.read_csv('./u.data', sep='\t', names=r_cols, encoding='latin-1')
@@ -40,8 +40,26 @@ newArrOnlyRatings = newArr.iloc[:, [0] + list(range(4, 22))]
 result = newArrOnlyRatings.groupby(["user id"]).sum()
 result = result.iloc[:, list(range(0, 18))]
 # print(result)
-data = result.values.tolist()
+# data = result.values.tolist()
 # end Data sum values
+
+# Data normalization
+norm = pd.DataFrame([])
+norm['max_value'] = result.max(axis=1)
+norm['min_value'] = result.min(axis=1)
+
+result = result.values.tolist()
+norm = norm.values.tolist()
+
+for index, tuple in enumerate(result):
+    for i in range(len(tuple)):
+        tuple[i] = (tuple[i] - norm[index][1])/(norm[index][0] - norm[index][1])
+
+data = result
+
+
+# end Data normalization
+
 
 # END PANDAS ========================================================================
 
@@ -63,7 +81,7 @@ def bsas(data, theta):
         # print("next vector: ", vector)
 
         for centroid in cluster_centroids:
-            euclidean_distances.append(np.linalg.norm(np.subtract(vector, centroid)))
+            euclidean_distances.append(np.linalg.norm(np.subtract(vector, centroid))**2)
 
         min_euclidean_distance_pos = np.argmin(euclidean_distances)
         # print("euclidean_distances: ", euclidean_distances)
@@ -91,12 +109,16 @@ def calculate_centroid(cluster_size, centroid, vector):
 def clusters_number_estimation(theta_list, data):
     cluster_estimations = []
 
-    np.random.shuffle(data)
-
     for theta in theta_list:
+        np.random.shuffle(data)
         # print("shuffled data: ", data)
         bsas_result = bsas(data, theta)
         cluster_estimations.append([theta, len(bsas_result[0])])
+
+    with open('your_file.txt', 'w') as f:
+        for i in range(len(cluster_estimations)):
+            f.write("%.3f %.1f \n" % (theta_list[i], cluster_estimations[i][1]))
+
 
     cluster_number_for_each_theta = [number[1] for number in cluster_estimations]
     fig, ax = plt.subplots()
