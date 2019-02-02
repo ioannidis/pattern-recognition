@@ -1,6 +1,9 @@
 .idea/
 u.data
 u.item
+*.base
+*.test
+your_file.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
