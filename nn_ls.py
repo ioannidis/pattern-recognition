@@ -2,7 +2,8 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
-from sklearn.preprocessing import normalize
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report
 import pandas as pd
 import numpy as np
 from movielens_data import MovieLensData
@@ -41,19 +42,22 @@ for user_id in range(1, user_count + 1):
 print('Creating training and test splits...')
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-# print('Normalizing training data...')
-# X_norm_train = normalize(X_train)
-# X_norm_test = normalize(X_test)
+print('Normalizing training data...')
+scaler = StandardScaler()
+scaler.fit(X)
+
+X_norm_train = scaler.transform(X_train)
+X_norm_test = scaler.transform(X_test)
 
 print('Initializing neural network...')
 
 neural_network = MLPClassifier(
-    hidden_layer_sizes=(20,),
+    hidden_layer_sizes=(100,),
     activation='logistic',
     max_iter=100)
 
 print('Training neural network...')
-neural_network.fit(X_train, y_train)
+neural_network.fit(X_norm_train, y_train)
 
 print('5-fold cross validation...')
 print(cross_val_score(neural_network, X_test, y_test, cv=5))

@@ -9,14 +9,14 @@ pd.set_option('display.width', 1000)
 dataObj = MovieLensData()
 data = dataObj.get_normalized_data()
 
-hierachical = linkage(data, method = 'median', metric = 'euclidean')
+hierarchical = linkage(data, method = 'median', metric = 'euclidean')
 
 plt.figure(figsize = (19, 9))
 plt.title('Hierarchical Clustering Dendrogram')
 plt.xlabel('sample index')
 plt.ylabel('distance')
 dendrogram(
-    hierachical,
+    hierarchical,
     leaf_rotation = 90,
     leaf_font_size = 10,
     truncate_mode = 'lastp',
