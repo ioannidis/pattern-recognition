@@ -66,5 +66,5 @@ def clusters_number_estimation(theta_min, theta_max, theta_step, data):
 
 
 
-clusters_number_estimation(0.1 , 2.1, 0.01, data)
+clusters_number_estimation(0.1 , 2.1, 0.005, data)
 
