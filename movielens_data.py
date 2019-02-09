@@ -9,12 +9,12 @@ import pandas as pd
 class MovieLensData:
 
     def __init__(self):
-        self.load_user_ratings_data()
+        self.load_user_ratings_data_gt_4()
         self.load_movies_data()
         self.merge_ratings_movies()
         self.movie_categories_liked_per_user()
 
-    def load_user_ratings_data(self):
+    def load_user_ratings_data_gt_4(self):
         # Load user rating data
         r_cols = ["user id" , "movie id" , "rating", "timestamp"]
         ratings = pd.read_csv('./u.data', sep = '\t', names = r_cols, encoding = 'latin-1')
