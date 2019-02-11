@@ -52,7 +52,7 @@ def clusters_number_estimation(theta_min, theta_max, theta_step, data):
         bsas_result = bsas(data, theta)
         cluster_estimations.append([theta, len(bsas_result[0])])
 
-    with open('your_file.txt', 'w') as f:
+    with open('result.txt', 'w') as f:
         for i in range(len(cluster_estimations)):
             f.write("%.3f %.1f \n" % (theta_list[i], cluster_estimations[i][1]))
 
