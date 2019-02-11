@@ -66,3 +66,13 @@ class MovieLensData:
                 tuple[i] = (tuple[i] - norm_list[index][0]) / (norm_list[index][1] - norm_list[index][0])
 
         return results
+
+    def load_fold_data(self, number, type):
+        r_cols = ["user id", "movie id", "rating", "timestamp"]
+        data = pd.read_csv('./u' + str(number) + '.' + type , sep='\t', names=r_cols, encoding='latin-1')
+        # Sort ratings by user id
+        data = data.drop("timestamp", axis=1)
+        data = data.sort_values("user id")
+        return data
+
+
