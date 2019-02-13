@@ -3,9 +3,6 @@ from scipy.cluster.hierarchy import dendrogram, linkage
 import pandas as pd
 from movielens_data import MovieLensData
 
-pd.set_option('display.max_columns', 20)
-pd.set_option('display.width', 1000)
-
 dataObj = MovieLensData()
 data = dataObj.get_normalized_data()
 
