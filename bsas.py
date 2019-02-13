@@ -8,7 +8,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from movielens_data import MovieLensData
 
+# Access data
 dataObj = MovieLensData()
+
+# Load normalized data
 data = dataObj.get_normalized_data()
 
 # Basic sequential algorithmic scheme
@@ -38,10 +41,11 @@ def bsas(data, theta):
 
     return [clusters, cluster_centroids]
 
+# Calculate the centroids
 def calculate_centroid(cluster_size, centroid, vector):
     return np.add(np.multiply(cluster_size - 1, centroid), vector) / cluster_size
 
-
+# Cluster number estimation algorithm
 def clusters_number_estimation(theta_min, theta_max, theta_step, data):
     theta_list = np.arange(theta_min, theta_max, theta_step)
     cluster_estimations = []

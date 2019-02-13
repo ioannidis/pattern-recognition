@@ -57,6 +57,7 @@ class MovieLensData:
 
         return min_max
 
+    # Normalize data, 0 to 1, and return the result
     def get_normalized_data(self):
         results = self.sum_movie_categories_liked_per_user().values.tolist()
         norm_list = self.calculate_min_max().values.tolist()
@@ -67,6 +68,7 @@ class MovieLensData:
 
         return results
 
+    # Load data based on the selected fold and type
     def load_fold_data(self, number, type):
         r_cols = ["user id", "movie id", "rating", "timestamp"]
         data = pd.read_csv('./u' + str(number) + '.' + type , sep='\t', names=r_cols, encoding='latin-1')

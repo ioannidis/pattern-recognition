@@ -1,14 +1,29 @@
+# Pattern Recognition 2018-2019  #
+#================================#
+# p16036 - Ioannidis Panagiotis  #
+# p16112 - Paravantis Athanasios #
+#================================#
+
 import pandas as pd
 from sklearn.neural_network import MLPClassifier
 from movielens_data import MovieLensData
 
+# Access data
 data = MovieLensData()
+
+# Select the fold number
 fold_number = 5
 
+# Load training data from the selected fold
 data_train = data.load_fold_data(fold_number, "base")
+
+# Load movies
 movies = data.movies
 
+# Merge training data and movies on movie id
 ratings_movies_train = pd.merge(data_train, movies, on='movie id')
+
+# Sorting the merged dataset on user id and rating
 ratings_movies_train = ratings_movies_train.sort_values(["user id", "rating"])
 
 
@@ -28,9 +43,13 @@ for i in range(len(X)):
     X[i] = X[i].drop(["user id", "movie id", "rating"], axis=1)
 
 
+# Load test data from the selected fold
 data_test = data.load_fold_data(fold_number, "test")
 
+# Merge test data and movies on movie id
 ratings_movies_test = pd.merge(data_test, movies, on='movie id')
+
+# Sorting the merged dataset on user id and rating
 ratings_movies_test = ratings_movies_test.sort_values(["user id", "rating"])
 
 
@@ -46,7 +65,7 @@ clf = list()
 for i in range(len(X)):
     clf.append(MLPClassifier(hidden_layer_sizes=(9, 5, 9), activation='logistic', solver='lbfgs').fit(X[i], y[i]))
 
-
+# Ask for user id and movie id
 while True:
 
     while True:
@@ -78,6 +97,7 @@ while True:
     selected_movie = movies.loc[(movies["movie id"] == movie_id_input)]
     selected_movie = selected_movie.drop("movie id", axis=1)
 
+    # Print the result
     if (clf[user_id_input - 1].predict(selected_movie)) > 0:
         print("The user has seen this movie")
     else:
