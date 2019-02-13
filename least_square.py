@@ -47,13 +47,37 @@ for i in range(len(X)):
 
 
 while True:
-    user_id_input = int(input("Give a user id (1-943):"))
-    movie_id_input = int(input("Give a movie id (1-1682)"))
+
+    while True:
+        try:
+            user_id_input = int(input("Give a user id (1-943):"))
+        except ValueError:
+            print("Please, type a valid number!")
+            continue
+
+        if user_id_input < 1 or user_id_input > 943:
+            print("Please, type a number between 1 and 943.")
+            continue
+        else:
+            break
+
+    while True:
+        try:
+            movie_id_input = int(input("Give a movie id (1-1682)"))
+        except ValueError:
+            print("Please, type a valid number!")
+            continue
+
+        if movie_id_input < 1 or movie_id_input > 1682:
+            print("Please, type a number between 1 and 1682.")
+            continue
+        else:
+            break
 
     selected_movie = movies.loc[(movies["movie id"] == movie_id_input)]
     selected_movie = selected_movie.drop("movie id", axis=1)
 
-    if (reg[user_id_input - 1].predict(selected_movie)) > 0:
+    if (reg[int(user_id_input) - 1].predict(selected_movie)) > 0:
         print("The user has seen this movie")
     else:
         print("The user has NOT seen this movie")
