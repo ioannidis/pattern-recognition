@@ -44,7 +44,7 @@ for i in range(len(X_test)):
 
 clf = list()
 for i in range(len(X)):
-    clf.append(MLPClassifier(hidden_layer_sizes=(18, 9, 18), activation='logistic', solver='lbfgs').fit(X[i], y[i]))
+    clf.append(MLPClassifier(hidden_layer_sizes=(9, 5, 9), activation='logistic', solver='lbfgs').fit(X[i], y[i]))
 
 
 while True:
